@@ -1,23 +1,29 @@
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { CategorySelector } from '../components/CategorySelector';
 import { ClothingImagePreview } from '../components/ClothingImagePreview';
+import { ClothingItemCard } from '../components/ClothingItemCard';
+import { EmptyWardrobe } from '../components/EmptyWardrobe';
 import { CLOTHING_CATEGORIES } from '../constants/clothingCategories';
 import { useClothingForm } from '../hooks/useClothingForm';
 import { theme } from '../styles/theme';
 
 export function HomeScreen() {
   const {
+    cancelSelection,
+    clothingItems,
     imageUri,
     pickImage,
+    removeClothingItem,
     saveClothingItem,
     selectedCategory,
     setSelectedCategory,
   } = useClothingForm();
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Mi Armario</Text>
+      <Text style={styles.counter}>Prendas guardadas: {clothingItems.length}</Text>
 
       {!imageUri ? (
         <Button
@@ -45,16 +51,32 @@ export function HomeScreen() {
               onPress={saveClothingItem}
               title="Guardar prenda"
             />
+            <View style={styles.buttonSpacer} />
+            <Button color={theme.colors.danger} onPress={cancelSelection} title="Cancelar" />
           </View>
         </>
       )}
-    </View>
+
+      <View style={styles.wardrobeSection}>
+        <Text style={styles.sectionTitle}>Prendas guardadas</Text>
+
+        {clothingItems.length === 0 ? (
+          <EmptyWardrobe />
+        ) : (
+          clothingItems.map((item) => (
+            <ClothingItemCard item={item} key={item.id} onDelete={removeClothingItem} />
+          ))
+        )}
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   actionButtons: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
     marginTop: theme.spacing.sm,
   },
   buttonSpacer: {
@@ -63,9 +85,20 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     backgroundColor: theme.colors.background,
-    flex: 1,
-    justifyContent: 'center',
+    flexGrow: 1,
     padding: theme.spacing.lg,
+  },
+  counter: {
+    color: theme.colors.textMuted,
+    fontSize: 16,
+    marginBottom: theme.spacing.lg,
+  },
+  sectionTitle: {
+    alignSelf: 'flex-start',
+    color: theme.colors.text,
+    fontSize: 20,
+    fontWeight: '700',
+    marginBottom: theme.spacing.md,
   },
   subtitle: {
     color: theme.colors.textMuted,
@@ -77,6 +110,11 @@ const styles = StyleSheet.create({
     color: theme.colors.text,
     fontSize: 28,
     fontWeight: 'bold',
+    marginTop: theme.spacing.xl,
     marginBottom: theme.spacing.lg,
+  },
+  wardrobeSection: {
+    marginTop: theme.spacing.xxl,
+    width: '100%',
   },
 });
