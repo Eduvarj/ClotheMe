@@ -102,7 +102,18 @@ export function useClothingForm() {
     }
   };
 
-  const removeClothingItem = async (itemId: string) => {
+  const updateClothingItemCategory = async (
+    itemId: string,
+    nextCategory: ClothingCategory,
+  ) => {
+    const nextItems = clothingItems.map((item) =>
+      item.id === itemId ? { ...item, category: nextCategory } : item,
+    );
+
+    return persistClothingItems(nextItems);
+  };
+
+  const deleteClothingItem = async (itemId: string) => {
     const itemToRemove = clothingItems.find((item) => item.id === itemId);
     const nextItems = clothingItems.filter((item) => item.id !== itemId);
     const didSave = await persistClothingItems(nextItems);
@@ -110,6 +121,22 @@ export function useClothingForm() {
     if (didSave && itemToRemove) {
       await removeWardrobeImage(itemToRemove.imageUri);
     }
+  };
+
+  const removeClothingItem = async (itemId: string) => {
+    Alert.alert('Eliminar prenda', '¿Quieres eliminar esta prenda de tu armario?', [
+      {
+        text: 'Cancelar',
+        style: 'cancel',
+      },
+      {
+        text: 'Eliminar',
+        onPress: () => {
+          void deleteClothingItem(itemId);
+        },
+        style: 'destructive',
+      },
+    ]);
   };
 
   return {
@@ -122,5 +149,6 @@ export function useClothingForm() {
     saveClothingItem,
     selectedCategory,
     setSelectedCategory,
+    updateClothingItemCategory,
   };
 }

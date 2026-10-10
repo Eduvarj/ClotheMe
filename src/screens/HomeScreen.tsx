@@ -1,12 +1,15 @@
+import { useState } from 'react';
 import { Button, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { CategorySelector } from '../components/CategorySelector';
+import { CategoryFilter } from '../components/CategoryFilter';
 import { ClothingImagePreview } from '../components/ClothingImagePreview';
 import { ClothingItemCard } from '../components/ClothingItemCard';
 import { EmptyWardrobe } from '../components/EmptyWardrobe';
-import { CLOTHING_CATEGORIES } from '../constants/clothingCategories';
+import { CLOTHING_CATEGORIES, CLOTHING_CATEGORY_FILTERS } from '../constants/clothingCategories';
 import { useClothingForm } from '../hooks/useClothingForm';
 import { theme } from '../styles/theme';
+import type { ClothingCategory, ClothingCategoryFilter, ClothingItem } from '../types/clothing';
 
 export function HomeScreen() {
   const {
@@ -19,13 +22,44 @@ export function HomeScreen() {
     saveClothingItem,
     selectedCategory,
     setSelectedCategory,
+    updateClothingItemCategory,
   } = useClothingForm();
+  const [selectedFilter, setSelectedFilter] = useState<ClothingCategoryFilter>('Todas');
+  const [editingItemId, setEditingItemId] = useState<string | null>(null);
+  const [editingCategory, setEditingCategory] = useState<ClothingCategory>('Playera');
+
+  const filteredItems =
+    selectedFilter === 'Todas'
+      ? clothingItems
+      : clothingItems.filter((item) => item.category === selectedFilter);
+
+  const counterText =
+    selectedFilter === 'Todas'
+      ? `Prendas guardadas: ${clothingItems.length}`
+      : `Mostrando ${filteredItems.length} de ${clothingItems.length} prendas`;
+
+  const startEditingItem = (item: ClothingItem) => {
+    setEditingItemId(item.id);
+    setEditingCategory(item.category);
+  };
+
+  const cancelEditingItem = () => {
+    setEditingItemId(null);
+  };
+
+  const saveEditingItem = async (itemId: string) => {
+    const didSave = await updateClothingItemCategory(itemId, editingCategory);
+
+    if (didSave) {
+      cancelEditingItem();
+    }
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Mi Armario</Text>
       <Text style={styles.counter}>
-        {isLoadingWardrobe ? 'Cargando prendas...' : `Prendas guardadas: ${clothingItems.length}`}
+        {isLoadingWardrobe ? 'Cargando prendas...' : counterText}
       </Text>
 
       {!imageUri ? (
@@ -65,13 +99,34 @@ export function HomeScreen() {
       <View style={styles.wardrobeSection}>
         <Text style={styles.sectionTitle}>Prendas guardadas</Text>
 
+        <CategoryFilter
+          filters={CLOTHING_CATEGORY_FILTERS}
+          onSelectFilter={setSelectedFilter}
+          selectedFilter={selectedFilter}
+        />
+
         {isLoadingWardrobe ? (
           <Text style={styles.loadingText}>Cargando tu armario...</Text>
         ) : clothingItems.length === 0 ? (
           <EmptyWardrobe />
+        ) : filteredItems.length === 0 ? (
+          <EmptyWardrobe
+            description="Cambia el filtro o guarda una prenda con esta categoría."
+            title="No hay prendas en esta categoría"
+          />
         ) : (
-          clothingItems.map((item) => (
-            <ClothingItemCard item={item} key={item.id} onDelete={removeClothingItem} />
+          filteredItems.map((item) => (
+            <ClothingItemCard
+              editingCategory={editingCategory}
+              isEditing={editingItemId === item.id}
+              item={item}
+              key={item.id}
+              onCancelEdit={cancelEditingItem}
+              onChangeEditingCategory={setEditingCategory}
+              onDelete={removeClothingItem}
+              onEdit={startEditingItem}
+              onSaveEdit={saveEditingItem}
+            />
           ))
         )}
       </View>
