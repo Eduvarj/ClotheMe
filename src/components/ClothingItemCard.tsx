@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { EditCategoryForm } from './EditCategoryForm';
@@ -25,9 +26,25 @@ export function ClothingItemCard({
   onEdit,
   onSaveEdit,
 }: ClothingItemCardProps) {
+  const [hasImageError, setHasImageError] = useState(false);
+
+  useEffect(() => {
+    setHasImageError(false);
+  }, [item.imageUri]);
+
   return (
     <View style={styles.card}>
-      <Image source={{ uri: item.imageUri }} style={styles.image} />
+      {hasImageError ? (
+        <View style={styles.imageFallback}>
+          <Text style={styles.imageFallbackText}>Imagen no disponible</Text>
+        </View>
+      ) : (
+        <Image
+          onError={() => setHasImageError(true)}
+          source={{ uri: item.imageUri }}
+          style={styles.image}
+        />
+      )}
 
       {isEditing ? (
         <EditCategoryForm
@@ -126,5 +143,22 @@ const styles = StyleSheet.create({
     borderRadius: theme.borderRadius.lg,
     height: 72,
     width: 72,
+  },
+  imageFallback: {
+    alignItems: 'center',
+    backgroundColor: theme.colors.surfaceMuted,
+    borderColor: theme.colors.border,
+    borderRadius: theme.borderRadius.lg,
+    borderWidth: 1,
+    height: 72,
+    justifyContent: 'center',
+    paddingHorizontal: theme.spacing.xs,
+    width: 72,
+  },
+  imageFallbackText: {
+    color: theme.colors.textMuted,
+    fontSize: 10,
+    fontWeight: '700',
+    textAlign: 'center',
   },
 });

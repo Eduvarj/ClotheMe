@@ -33,11 +33,13 @@ El proyecto permite seleccionar una imagen desde la galería, elegir la categor�
 
 ## Capturas de pantalla
 
-Las capturas del proyecto se pueden agregar en:
+Las capturas reales del proyecto se pueden agregar en:
 
 ```text
 docs/screenshots/
 ```
+
+Cuando existan capturas finales, se recomienda incluir al menos una vista del armario vacío, una prenda guardada y el filtro por categoría.
 
 ## Estructura del proyecto
 
@@ -46,6 +48,7 @@ ClotheMe/
   assets/
   docs/
     screenshots/
+    testing.md
   src/
     components/
     constants/
@@ -94,7 +97,15 @@ npm run type-check
 
 ## Estado del proyecto
 
-Proyecto en etapa inicial de portafolio. La app ya tiene una primera experiencia funcional para cargar, clasificar, listar, eliminar y conservar prendas de forma local.
+Primera versión estable de portafolio. La app permite cargar, clasificar, filtrar, editar, eliminar y conservar prendas de forma local.
+
+## QA manual
+
+La checklist de pruebas está disponible en:
+
+```text
+docs/testing.md
+```
 
 ## Próximas mejoras
 
