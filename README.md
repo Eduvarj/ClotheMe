@@ -1,26 +1,22 @@
 # ClotheMe
 
-ClotheMe es una aplicación móvil creada con React Native, Expo y TypeScript para organizar prendas y empezar a construir un armario digital de forma sencilla.
+Aplicación móvil desarrollada con React Native, Expo y TypeScript para organizar prendas en un armario digital con persistencia local.
 
 ## Descripción
 
-El proyecto permite seleccionar una imagen desde la galería, elegir la categoría de la prenda, guardarla en una lista local persistente y eliminar prendas guardadas. Es una base pequeña y clara para seguir creciendo con funcionalidades como autenticación o generación de outfits.
+ClotheMe permite subir una imagen desde la galería, asignarle una categoría, guardar la prenda localmente, filtrarla, editar su categoría y eliminarla con confirmación. Es un proyecto de portafolio enfocado en buenas prácticas básicas de React Native, Expo y TypeScript.
 
 ## Características principales
 
-- Selección de imágenes desde la galería del dispositivo.
-- Clasificación básica por categoría de prenda.
-- Vista previa de la imagen seleccionada.
-- Lista local de prendas guardadas.
-- Persistencia local con Async Storage.
-- Filtros por categoría para revisar el armario.
-- Edición básica de la categoría de una prenda.
-- Interfaz pulida para presentación de portafolio.
-- Contador de prendas.
-- Estado vacío cuando todavía no hay prendas.
-- Confirmación antes de eliminar prendas guardadas.
-- Estructura simple separada por pantallas, componentes, hooks, constantes, estilos y tipos.
-- Código TypeScript con configuración estricta.
+- Subida de imágenes desde la galería.
+- Guardado local de prendas con Async Storage.
+- Persistencia de imágenes en móvil con FileSystem y en web con data URI.
+- Listado de prendas con contador y estado vacío.
+- Filtros por categoría: `Todas`, `Playera`, `Pantalón`, `Calzado` y `Accesorio`.
+- Edición básica de categoría.
+- Eliminación con confirmación.
+- Fallback para imágenes rotas o antiguas.
+- UI pulida para presentación de portafolio.
 
 ## Tecnologías utilizadas
 
@@ -33,13 +29,50 @@ El proyecto permite seleccionar una imagen desde la galería, elegir la categor�
 
 ## Capturas de pantalla
 
-Las capturas reales del proyecto se pueden agregar en:
+Las capturas reales deben guardarse en:
 
 ```text
 docs/screenshots/
 ```
 
-Cuando existan capturas finales, se recomienda incluir al menos una vista del armario vacío, una prenda guardada y el filtro por categoría.
+Nombres sugeridos:
+
+```text
+home-empty.png
+item-list.png
+edit-category.png
+filtered-category.png
+```
+
+Actualmente no hay capturas reales versionadas. Cuando se agreguen, esta sección puede actualizarse con las imágenes.
+
+## Instalación
+
+```bash
+git clone https://github.com/Eduvarj/ClotheMe.git
+cd ClotheMe
+npm install
+```
+
+## Ejecución
+
+```bash
+npx expo start
+```
+
+Para iniciar con caché limpio:
+
+```bash
+npx expo start -c
+```
+
+## Scripts disponibles
+
+- `npm run start`: inicia Expo.
+- `npm run android`: inicia Expo para Android.
+- `npm run ios`: inicia Expo para iOS.
+- `npm run web`: inicia Expo para web.
+- `npm run type-check`: valida TypeScript sin generar archivos.
 
 ## Estructura del proyecto
 
@@ -48,6 +81,8 @@ ClotheMe/
   assets/
   docs/
     screenshots/
+    github.md
+    release-v1.0.0.md
     testing.md
   src/
     components/
@@ -63,57 +98,25 @@ ClotheMe/
   tsconfig.json
 ```
 
-## Instalación
-
-```bash
-git clone https://github.com/Eduvarj/ClotheMe.git
-cd ClotheMe
-npm install
-```
-
-## Ejecución en desarrollo
-
-```bash
-npx expo start
-```
-
-También puedes usar los scripts disponibles:
-
-```bash
-npm run start
-npm run android
-npm run ios
-npm run web
-npm run type-check
-```
-
-## Scripts disponibles
-
-- `npm run start`: inicia Expo.
-- `npm run android`: inicia Expo para Android.
-- `npm run ios`: inicia Expo para iOS.
-- `npm run web`: inicia Expo para web.
-- `npm run type-check`: valida TypeScript sin generar archivos.
-
-## Estado del proyecto
-
-Primera versión estable de portafolio. La app permite cargar, clasificar, filtrar, editar, eliminar y conservar prendas de forma local.
-
 ## QA manual
 
-La checklist de pruebas está disponible en:
+La checklist manual de pruebas está en:
 
 ```text
 docs/testing.md
 ```
 
+## Estado del proyecto
+
+Primera versión estable de portafolio. La app permite cargar, clasificar, filtrar, editar, eliminar y conservar prendas de forma local.
+
 ## Próximas mejoras
 
-- Migrar la persistencia local a backend cuando exista autenticación.
+- Agregar capturas reales al README.
 - Permitir editar la imagen de una prenda.
-- Incorporar capturas reales en `docs/screenshots/`.
+- Agregar búsqueda por nombre o notas.
+- Migrar persistencia a backend cuando exista autenticación.
 
 ## Autor
 
-Jesus Eduardo Vezquez Rodriguez
--- JEVR
+Jesus Eduardo Vazquez Rodriguez
