@@ -1,6 +1,39 @@
 import * as FileSystem from 'expo-file-system/legacy';
+import { Platform } from 'react-native';
 
 const WARDROBE_IMAGES_FOLDER = 'wardrobe-images';
+
+function blobToDataUri(blob: Blob) {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      if (typeof reader.result === 'string') {
+        resolve(reader.result);
+        return;
+      }
+
+      reject(new Error('Unable to read image as data URI.'));
+    };
+
+    reader.onerror = () => {
+      reject(reader.error ?? new Error('Unable to read image as data URI.'));
+    };
+
+    reader.readAsDataURL(blob);
+  });
+}
+
+async function persistWebImage(sourceUri: string) {
+  if (sourceUri.startsWith('data:')) {
+    return sourceUri;
+  }
+
+  const response = await fetch(sourceUri);
+  const blob = await response.blob();
+
+  return blobToDataUri(blob);
+}
 
 function getWardrobeImagesDirectory() {
   if (!FileSystem.documentDirectory) {
@@ -39,6 +72,10 @@ async function ensureWardrobeImagesDirectory() {
 }
 
 export async function persistWardrobeImage(sourceUri: string) {
+  if (Platform.OS === 'web') {
+    return persistWebImage(sourceUri);
+  }
+
   const directory = await ensureWardrobeImagesDirectory();
 
   if (!directory || sourceUri.startsWith(directory)) {
@@ -59,6 +96,10 @@ export async function persistWardrobeImage(sourceUri: string) {
 }
 
 export async function removeWardrobeImage(imageUri: string) {
+  if (Platform.OS === 'web') {
+    return;
+  }
+
   const directory = getWardrobeImagesDirectory();
 
   if (!directory || !imageUri.startsWith(directory)) {
