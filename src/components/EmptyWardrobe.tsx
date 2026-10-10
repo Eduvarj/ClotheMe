@@ -2,13 +2,19 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { theme } from '../styles/theme';
 
-export function EmptyWardrobe() {
+type EmptyWardrobeProps = {
+  description?: string;
+  title?: string;
+};
+
+export function EmptyWardrobe({
+  description = 'Sube una imagen, elige una categoría y guarda tu primera prenda.',
+  title = 'Tu armario está vacío',
+}: EmptyWardrobeProps) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tu armario está vacío</Text>
-      <Text style={styles.description}>
-        Sube una imagen, elige una categoría y guarda tu primera prenda.
-      </Text>
+      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.description}>{description}</Text>
     </View>
   );
 }

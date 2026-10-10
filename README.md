@@ -13,9 +13,11 @@ El proyecto permite seleccionar una imagen desde la galería, elegir la categor�
 - Vista previa de la imagen seleccionada.
 - Lista local de prendas guardadas.
 - Persistencia local con Async Storage.
+- Filtros por categoría para revisar el armario.
+- Edición básica de la categoría de una prenda.
 - Contador de prendas.
 - Estado vacío cuando todavía no hay prendas.
-- Eliminación de prendas guardadas.
+- Confirmación antes de eliminar prendas guardadas.
 - Estructura simple separada por pantallas, componentes, hooks, constantes, estilos y tipos.
 - Código TypeScript con configuración estricta.
 
@@ -96,8 +98,7 @@ Proyecto en etapa inicial de portafolio. La app ya tiene una primera experiencia
 ## Próximas mejoras
 
 - Migrar la persistencia local a backend cuando exista autenticación.
-- Crear filtros por categoría.
-- Agregar edición de prendas.
+- Permitir editar la imagen de una prenda.
 - Incorporar capturas reales en `docs/screenshots/`.
 
 ## Autor
