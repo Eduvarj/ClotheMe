@@ -4,7 +4,7 @@ ClotheMe es una aplicación móvil creada con React Native, Expo y TypeScript pa
 
 ## Descripción
 
-El proyecto permite seleccionar una imagen desde la galería, elegir la categoría de la prenda, guardarla en una lista local y eliminar prendas guardadas. Es una base pequeña y clara para seguir creciendo con funcionalidades como persistencia de datos, autenticación o generación de outfits.
+El proyecto permite seleccionar una imagen desde la galería, elegir la categoría de la prenda, guardarla en una lista local persistente y eliminar prendas guardadas. Es una base pequeña y clara para seguir creciendo con funcionalidades como autenticación o generación de outfits.
 
 ## Características principales
 
@@ -12,6 +12,7 @@ El proyecto permite seleccionar una imagen desde la galería, elegir la categor�
 - Clasificación básica por categoría de prenda.
 - Vista previa de la imagen seleccionada.
 - Lista local de prendas guardadas.
+- Persistencia local con Async Storage.
 - Contador de prendas.
 - Estado vacío cuando todavía no hay prendas.
 - Eliminación de prendas guardadas.
@@ -24,6 +25,8 @@ El proyecto permite seleccionar una imagen desde la galería, elegir la categor�
 - Expo SDK 57
 - TypeScript
 - Expo Image Picker
+- Async Storage
+- Expo FileSystem
 
 ## Capturas de pantalla
 
@@ -88,11 +91,11 @@ npm run type-check
 
 ## Estado del proyecto
 
-Proyecto en etapa inicial de portafolio. La app ya tiene una primera experiencia funcional para cargar, clasificar, listar y eliminar prendas en memoria local. Todavía no guarda datos de forma persistente.
+Proyecto en etapa inicial de portafolio. La app ya tiene una primera experiencia funcional para cargar, clasificar, listar, eliminar y conservar prendas de forma local.
 
 ## Próximas mejoras
 
-- Guardar prendas en almacenamiento local o backend.
+- Migrar la persistencia local a backend cuando exista autenticación.
 - Crear filtros por categoría.
 - Agregar edición de prendas.
 - Incorporar capturas reales en `docs/screenshots/`.
