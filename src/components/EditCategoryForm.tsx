@@ -73,7 +73,9 @@ const styles = StyleSheet.create({
   },
   categoryButton: {
     backgroundColor: theme.colors.surfaceMuted,
+    borderColor: theme.colors.border,
     borderRadius: theme.borderRadius.pill,
+    borderWidth: 1,
     marginBottom: theme.spacing.xs,
     marginRight: theme.spacing.xs,
     paddingHorizontal: theme.spacing.sm,
@@ -96,7 +98,8 @@ const styles = StyleSheet.create({
   },
   label: {
     color: theme.colors.text,
-    fontWeight: '700',
+    fontSize: 15,
+    fontWeight: '800',
     marginBottom: theme.spacing.xs,
   },
   options: {

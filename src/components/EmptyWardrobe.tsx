@@ -24,10 +24,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: theme.colors.surface,
     borderColor: theme.colors.border,
-    borderRadius: theme.borderRadius.lg,
+    borderRadius: theme.borderRadius.xl,
     borderWidth: 1,
-    padding: theme.spacing.lg,
+    padding: theme.spacing.xl,
     width: '100%',
+    ...theme.shadow,
   },
   description: {
     color: theme.colors.textMuted,
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: theme.colors.text,
-    fontSize: 16,
-    fontWeight: '700',
+    fontSize: 17,
+    fontWeight: '800',
   },
 });

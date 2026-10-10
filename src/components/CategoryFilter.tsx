@@ -39,8 +39,10 @@ export function CategoryFilter({
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: theme.colors.surfaceMuted,
+    backgroundColor: theme.colors.surface,
+    borderColor: theme.colors.border,
     borderRadius: theme.borderRadius.pill,
+    borderWidth: 1,
     margin: theme.spacing.xs,
     paddingHorizontal: theme.spacing.md,
     paddingVertical: theme.spacing.sm,
@@ -49,8 +51,8 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
   },
   buttonText: {
-    color: theme.colors.text,
-    fontWeight: '500',
+    color: theme.colors.textMuted,
+    fontWeight: '700',
   },
   buttonTextActive: {
     color: theme.colors.textInverted,
@@ -59,7 +61,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     marginBottom: theme.spacing.lg,
   },
 });

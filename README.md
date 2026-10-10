@@ -15,6 +15,7 @@ El proyecto permite seleccionar una imagen desde la galería, elegir la categor�
 - Persistencia local con Async Storage.
 - Filtros por categoría para revisar el armario.
 - Edición básica de la categoría de una prenda.
+- Interfaz pulida para presentación de portafolio.
 - Contador de prendas.
 - Estado vacío cuando todavía no hay prendas.
 - Confirmación antes de eliminar prendas guardadas.

@@ -13,8 +13,9 @@ export function ClothingImagePreview({ imageUri }: ClothingImagePreviewProps) {
 const styles = StyleSheet.create({
   image: {
     borderRadius: theme.borderRadius.lg,
-    height: 250,
+    alignSelf: 'center',
+    height: 240,
     marginBottom: theme.spacing.lg,
-    width: 250,
+    width: 240,
   },
 });
