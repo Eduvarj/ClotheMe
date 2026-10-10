@@ -27,7 +27,13 @@ export async function loadWardrobeItems(): Promise<ClothingItem[]> {
     return [];
   }
 
-  const parsedItems: unknown = JSON.parse(storedItems);
+  let parsedItems: unknown;
+
+  try {
+    parsedItems = JSON.parse(storedItems);
+  } catch {
+    return [];
+  }
 
   if (!Array.isArray(parsedItems)) {
     return [];
