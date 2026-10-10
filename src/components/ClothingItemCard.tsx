@@ -71,20 +71,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: theme.colors.surface,
     borderColor: theme.colors.border,
-    borderRadius: theme.borderRadius.lg,
+    borderRadius: theme.borderRadius.xl,
     borderWidth: 1,
     flexDirection: 'row',
-    marginBottom: theme.spacing.sm,
-    padding: theme.spacing.sm,
+    marginBottom: theme.spacing.md,
+    padding: theme.spacing.md,
     width: '100%',
+    ...theme.shadow,
   },
   actions: {
     alignItems: 'flex-end',
+    marginLeft: theme.spacing.sm,
   },
   category: {
     color: theme.colors.text,
-    fontSize: 16,
-    fontWeight: '700',
+    fontSize: 17,
+    fontWeight: '800',
   },
   content: {
     flex: 1,
@@ -96,7 +98,8 @@ const styles = StyleSheet.create({
     marginTop: theme.spacing.xs,
   },
   deleteButton: {
-    borderColor: theme.colors.danger,
+    backgroundColor: '#fff4ed',
+    borderColor: '#fed7aa',
     borderRadius: theme.borderRadius.pill,
     borderWidth: 1,
     paddingHorizontal: theme.spacing.md,
@@ -107,7 +110,8 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   editButton: {
-    borderColor: theme.colors.primary,
+    backgroundColor: theme.colors.primarySoft,
+    borderColor: '#c8ddd1',
     borderRadius: theme.borderRadius.pill,
     borderWidth: 1,
     marginBottom: theme.spacing.xs,
@@ -120,7 +124,7 @@ const styles = StyleSheet.create({
   },
   image: {
     borderRadius: theme.borderRadius.lg,
-    height: 64,
-    width: 64,
+    height: 72,
+    width: 72,
   },
 });

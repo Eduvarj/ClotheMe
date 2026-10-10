@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Button, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
+import { AppButton } from '../components/AppButton';
 import { CategorySelector } from '../components/CategorySelector';
 import { CategoryFilter } from '../components/CategoryFilter';
 import { ClothingImagePreview } from '../components/ClothingImagePreview';
@@ -57,78 +58,98 @@ export function HomeScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Mi Armario</Text>
-      <Text style={styles.counter}>
-        {isLoadingWardrobe ? 'Cargando prendas...' : counterText}
-      </Text>
-
-      {!imageUri ? (
-        <Button
-          color={theme.colors.primary}
-          disabled={isLoadingWardrobe}
-          onPress={pickImage}
-          title="Subir prenda de la galería"
-        />
-      ) : (
-        <>
-          <ClothingImagePreview imageUri={imageUri} />
-
-          <Text style={styles.subtitle}>¿Qué tipo de prenda es?</Text>
-
-          <CategorySelector
-            categories={CLOTHING_CATEGORIES}
-            onSelectCategory={setSelectedCategory}
-            selectedCategory={selectedCategory}
-          />
-
-          <View style={styles.actionButtons}>
-            <Button color={theme.colors.secondary} onPress={pickImage} title="Cambiar foto" />
-            <View style={styles.buttonSpacer} />
-            <Button
-              color={theme.colors.success}
-              disabled={isLoadingWardrobe}
-              onPress={saveClothingItem}
-              title="Guardar prenda"
-            />
-            <View style={styles.buttonSpacer} />
-            <Button color={theme.colors.danger} onPress={cancelSelection} title="Cancelar" />
+      <View style={styles.content}>
+        <View style={styles.header}>
+          <Text style={styles.eyebrow}>ClotheMe</Text>
+          <Text style={styles.title}>Mi Armario</Text>
+          <Text style={styles.description}>
+            Guarda tus prendas, ordénalas por categoría y encuentra rápido lo que tienes.
+          </Text>
+          <View style={styles.counterBadge}>
+            <Text style={styles.counter}>
+              {isLoadingWardrobe ? 'Cargando prendas...' : counterText}
+            </Text>
           </View>
-        </>
-      )}
+        </View>
 
-      <View style={styles.wardrobeSection}>
-        <Text style={styles.sectionTitle}>Prendas guardadas</Text>
+        <View style={styles.formSection}>
+          <Text style={styles.sectionTitle}>Nueva prenda</Text>
 
-        <CategoryFilter
-          filters={CLOTHING_CATEGORY_FILTERS}
-          onSelectFilter={setSelectedFilter}
-          selectedFilter={selectedFilter}
-        />
+          {!imageUri ? (
+            <View style={styles.uploadState}>
+              <Text style={styles.uploadTitle}>Agrega una foto de tu prenda</Text>
+              <Text style={styles.uploadText}>
+                Usa una imagen clara para reconocerla fácilmente en tu armario.
+              </Text>
+              <AppButton
+                disabled={isLoadingWardrobe}
+                onPress={pickImage}
+                title="Subir desde galería"
+              />
+            </View>
+          ) : (
+            <>
+              <ClothingImagePreview imageUri={imageUri} />
 
-        {isLoadingWardrobe ? (
-          <Text style={styles.loadingText}>Cargando tu armario...</Text>
-        ) : clothingItems.length === 0 ? (
-          <EmptyWardrobe />
-        ) : filteredItems.length === 0 ? (
-          <EmptyWardrobe
-            description="Cambia el filtro o guarda una prenda con esta categoría."
-            title="No hay prendas en esta categoría"
+              <Text style={styles.subtitle}>Selecciona una categoría</Text>
+
+              <CategorySelector
+                categories={CLOTHING_CATEGORIES}
+                onSelectCategory={setSelectedCategory}
+                selectedCategory={selectedCategory}
+              />
+
+              <View style={styles.actionButtons}>
+                <AppButton onPress={pickImage} title="Cambiar foto" variant="secondary" />
+                <AppButton
+                  disabled={isLoadingWardrobe}
+                  onPress={saveClothingItem}
+                  title="Guardar prenda"
+                  variant="success"
+                />
+                <AppButton onPress={cancelSelection} title="Cancelar" variant="secondary" />
+              </View>
+            </>
+          )}
+        </View>
+
+        <View style={styles.wardrobeSection}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Prendas guardadas</Text>
+            <Text style={styles.sectionHint}>Filtra y edita tus categorías</Text>
+          </View>
+
+          <CategoryFilter
+            filters={CLOTHING_CATEGORY_FILTERS}
+            onSelectFilter={setSelectedFilter}
+            selectedFilter={selectedFilter}
           />
-        ) : (
-          filteredItems.map((item) => (
-            <ClothingItemCard
-              editingCategory={editingCategory}
-              isEditing={editingItemId === item.id}
-              item={item}
-              key={item.id}
-              onCancelEdit={cancelEditingItem}
-              onChangeEditingCategory={setEditingCategory}
-              onDelete={removeClothingItem}
-              onEdit={startEditingItem}
-              onSaveEdit={saveEditingItem}
+
+          {isLoadingWardrobe ? (
+            <Text style={styles.loadingText}>Cargando tu armario...</Text>
+          ) : clothingItems.length === 0 ? (
+            <EmptyWardrobe />
+          ) : filteredItems.length === 0 ? (
+            <EmptyWardrobe
+              description="Cambia el filtro o guarda una prenda con esta categoría."
+              title="No hay prendas en esta categoría"
             />
-          ))
-        )}
+          ) : (
+            filteredItems.map((item) => (
+              <ClothingItemCard
+                editingCategory={editingCategory}
+                isEditing={editingItemId === item.id}
+                item={item}
+                key={item.id}
+                onCancelEdit={cancelEditingItem}
+                onChangeEditingCategory={setEditingCategory}
+                onDelete={removeClothingItem}
+                onEdit={startEditingItem}
+                onSaveEdit={saveEditingItem}
+              />
+            ))
+          )}
+        </View>
       </View>
     </ScrollView>
   );
@@ -138,11 +159,9 @@ const styles = StyleSheet.create({
   actionButtons: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    gap: theme.spacing.sm,
     justifyContent: 'center',
-    marginTop: theme.spacing.sm,
-  },
-  buttonSpacer: {
-    width: theme.spacing.md,
+    marginTop: theme.spacing.md,
   },
   container: {
     alignItems: 'center',
@@ -150,17 +169,61 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     padding: theme.spacing.lg,
   },
+  content: {
+    maxWidth: 560,
+    width: '100%',
+  },
   counter: {
+    color: theme.colors.primary,
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  counterBadge: {
+    alignSelf: 'center',
+    backgroundColor: theme.colors.primarySoft,
+    borderRadius: theme.borderRadius.pill,
+    marginTop: theme.spacing.lg,
+    paddingHorizontal: theme.spacing.lg,
+    paddingVertical: theme.spacing.sm,
+  },
+  description: {
     color: theme.colors.textMuted,
-    fontSize: 16,
-    marginBottom: theme.spacing.lg,
+    fontSize: 15,
+    lineHeight: 22,
+    textAlign: 'center',
+  },
+  eyebrow: {
+    color: theme.colors.primary,
+    fontSize: 13,
+    fontWeight: '800',
+    marginBottom: theme.spacing.xs,
+    textTransform: 'uppercase',
+  },
+  formSection: {
+    backgroundColor: theme.colors.surface,
+    borderColor: theme.colors.border,
+    borderRadius: theme.borderRadius.xl,
+    borderWidth: 1,
+    padding: theme.spacing.lg,
+    ...theme.shadow,
+  },
+  header: {
+    alignItems: 'center',
+    marginBottom: theme.spacing.xl,
+    marginTop: theme.spacing.lg,
   },
   sectionTitle: {
-    alignSelf: 'flex-start',
     color: theme.colors.text,
     fontSize: 20,
     fontWeight: '700',
+  },
+  sectionHeader: {
     marginBottom: theme.spacing.md,
+  },
+  sectionHint: {
+    color: theme.colors.textMuted,
+    fontSize: 13,
+    marginTop: theme.spacing.xs,
   },
   loadingText: {
     color: theme.colors.textMuted,
@@ -170,14 +233,36 @@ const styles = StyleSheet.create({
     color: theme.colors.textMuted,
     fontSize: 18,
     fontWeight: '600',
-    marginBottom: theme.spacing.sm,
+    marginBottom: theme.spacing.md,
+    textAlign: 'center',
   },
   title: {
     color: theme.colors.text,
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginTop: theme.spacing.xl,
+    fontSize: 32,
+    fontWeight: '800',
+    marginBottom: theme.spacing.sm,
+    textAlign: 'center',
+  },
+  uploadState: {
+    alignItems: 'center',
+    backgroundColor: theme.colors.primarySoft,
+    borderColor: theme.colors.border,
+    borderRadius: theme.borderRadius.lg,
+    borderStyle: 'dashed',
+    borderWidth: 1,
+    padding: theme.spacing.xl,
+  },
+  uploadText: {
+    color: theme.colors.textMuted,
+    lineHeight: 20,
     marginBottom: theme.spacing.lg,
+    textAlign: 'center',
+  },
+  uploadTitle: {
+    color: theme.colors.text,
+    fontSize: 17,
+    fontWeight: '700',
+    marginBottom: theme.spacing.xs,
   },
   wardrobeSection: {
     marginTop: theme.spacing.xxl,

@@ -42,11 +42,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    marginBottom: theme.spacing.xl,
+    marginBottom: theme.spacing.lg,
   },
   button: {
     backgroundColor: theme.colors.surfaceMuted,
+    borderColor: theme.colors.border,
     borderRadius: theme.borderRadius.pill,
+    borderWidth: 1,
     margin: theme.spacing.xs,
     paddingHorizontal: theme.spacing.md,
     paddingVertical: theme.spacing.sm,
@@ -55,8 +57,8 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
   },
   buttonText: {
-    color: theme.colors.text,
-    fontWeight: '500',
+    color: theme.colors.textMuted,
+    fontWeight: '700',
   },
   buttonTextActive: {
     color: theme.colors.textInverted,

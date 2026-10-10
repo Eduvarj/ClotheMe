@@ -1,20 +1,23 @@
 export const theme = {
   borderRadius: {
+    md: 10,
     lg: 15,
     pill: 20,
+    xl: 24,
   },
   colors: {
-    background: '#f5f5f5',
-    border: '#dddddd',
-    danger: '#d32f2f',
-    primary: '#646cff',
-    secondary: '#888888',
-    success: '#4caf50',
+    background: '#f4f6f8',
+    border: '#d8dee6',
+    danger: '#c2410c',
+    primary: '#315c48',
+    primarySoft: '#e7f1ec',
+    secondary: '#667085',
+    success: '#2f7d4b',
     surface: '#ffffff',
-    surfaceMuted: '#e0e0e0',
-    text: '#333333',
+    surfaceMuted: '#eef1f5',
+    text: '#1f2933',
     textInverted: '#ffffff',
-    textMuted: '#555555',
+    textMuted: '#667085',
   },
   spacing: {
     xs: 5,
@@ -23,5 +26,15 @@ export const theme = {
     lg: 20,
     xl: 25,
     xxl: 32,
+  },
+  shadow: {
+    elevation: 2,
+    shadowColor: '#101828',
+    shadowOffset: {
+      height: 2,
+      width: 0,
+    },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
   },
 };
