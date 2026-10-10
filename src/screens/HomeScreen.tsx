@@ -13,6 +13,7 @@ export function HomeScreen() {
     cancelSelection,
     clothingItems,
     imageUri,
+    isLoadingWardrobe,
     pickImage,
     removeClothingItem,
     saveClothingItem,
@@ -23,11 +24,14 @@ export function HomeScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Mi Armario</Text>
-      <Text style={styles.counter}>Prendas guardadas: {clothingItems.length}</Text>
+      <Text style={styles.counter}>
+        {isLoadingWardrobe ? 'Cargando prendas...' : `Prendas guardadas: ${clothingItems.length}`}
+      </Text>
 
       {!imageUri ? (
         <Button
           color={theme.colors.primary}
+          disabled={isLoadingWardrobe}
           onPress={pickImage}
           title="Subir prenda de la galería"
         />
@@ -48,6 +52,7 @@ export function HomeScreen() {
             <View style={styles.buttonSpacer} />
             <Button
               color={theme.colors.success}
+              disabled={isLoadingWardrobe}
               onPress={saveClothingItem}
               title="Guardar prenda"
             />
@@ -60,7 +65,9 @@ export function HomeScreen() {
       <View style={styles.wardrobeSection}>
         <Text style={styles.sectionTitle}>Prendas guardadas</Text>
 
-        {clothingItems.length === 0 ? (
+        {isLoadingWardrobe ? (
+          <Text style={styles.loadingText}>Cargando tu armario...</Text>
+        ) : clothingItems.length === 0 ? (
           <EmptyWardrobe />
         ) : (
           clothingItems.map((item) => (
@@ -99,6 +106,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '700',
     marginBottom: theme.spacing.md,
+  },
+  loadingText: {
+    color: theme.colors.textMuted,
+    textAlign: 'center',
   },
   subtitle: {
     color: theme.colors.textMuted,
